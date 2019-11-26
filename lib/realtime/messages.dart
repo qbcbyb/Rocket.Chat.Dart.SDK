@@ -18,8 +18,7 @@ abstract class _ClientMessagesMixin implements _DdpClientWrapper {
           timestamp != null ? DateTimeToMap(timestamp) : null,
           quantity,
         ])
-        .then((call) =>
-            completer.complete(RoomMessageHistory.fromJson(call.reply)))
+        .then((call) => completer.complete(RoomMessageHistory.fromJson(call.reply)))
         .catchError((error) => completer.completeError(error));
     return completer.future;
   }
@@ -27,6 +26,7 @@ abstract class _ClientMessagesMixin implements _DdpClientWrapper {
   Future<Message> sendMessage(String roomId, String text) {
     Completer<Message> completer = Completer();
     final message = Message()
+      ..id = randomId()
       ..roomId = roomId
       ..msg = text;
     this
